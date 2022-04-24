@@ -2,7 +2,7 @@
   "name": "condicionales",
   "version": "1.0.0",
   "description": "",
-  "main": "condicionales.js",
+  "main": "arrays.js",
   "type": "module",
   "scripts": {
     "test": "jest"
