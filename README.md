@@ -1,7 +1,7 @@
 # Recuerda debes tener Node Instalado
 
 ## Estos dos comandos seran los unicos que debes usar
-npm es el gesto de paquetes de node que te permite instalar las dependencias necesarias para usar los test que incluye cada una de las carpetas.
+NPM es el gestor de paquetes de Node que te permite instalar las dependencias necesarias para usar los test que incluye cada una de las carpetas.
 ```
 npm install
 ```
