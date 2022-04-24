@@ -10,8 +10,16 @@ function queNumeroEsMayor(primerNumero, segundoNumero) {
   return
 }
 
+function indentificarIdioma(palabra) {
+  // recibiras un string "Hola", "Hi" y "Ni Hao"
+  // debes devolver el idioma al que pertenece
+  // "Español", "Ingles" o "Mandarin"
+  // Recuerda debes practicar switch
+}
+
 
 module.exports = {
   eresMayorDeEdad,
-  queNumeroEsMayor
+  queNumeroEsMayor,
+  indentificarIdioma
 }

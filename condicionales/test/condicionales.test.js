@@ -1,4 +1,4 @@
-const { eresMayorDeEdad, queNumeroEsMayor } = require("../condicionales")
+const { eresMayorDeEdad, queNumeroEsMayor, indentificarIdioma } = require("../condicionales")
 
 describe("Debes saber si es mayor de edad o no", () => {
   it("15 es menor de edad debe ser false", () => {
@@ -18,5 +18,17 @@ describe("Debes indentificar que numero es mayor", () => {
   })
   it("1 es menor que 20", () => {
     expect(queNumeroEsMayor(1, 20)).toBe(20)
+  })
+})
+
+describe("Debe ser el idioma correcto", () => {
+  it("debe ser Español", () => {
+    expect(indentificarIdioma("Hola")).toBe("Español")
+  })
+  it("debe ser Mandarin", () => {
+    expect(indentificarIdioma("Ni Hao")).toBe("Mandarin")
+  })
+  it("debe ser Ingles", () => {
+    expect(indentificarIdioma("Hello")).toBe("Ingles")
   })
 })
