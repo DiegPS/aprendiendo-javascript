@@ -20,11 +20,25 @@ function eliminaAlInicioDelArray(array) {
   // debes eliminar un elemento del array
   return
 }
+function unirElementosDelArray(array) {
+  // une elementos de un array por ejemplo:
+  // ["Hola","Programadora"]
+  // el resultado debe ser "Hola Programadora"
+  // debes añadir un espacio entre las palabras
+  return
+}
+function sumarTodosLosNumeros(array) {
+  //recibes un array de numeros
+  // debes retornar un numero que sea la suma
+  // de todos ellos
+}
 
 module.exports = {
   largoDeArray,
   agregarAlFinalDelArray,
   agregarAlInicioDelArray,
   eliminaAlFinalDelArray,
-  eliminaAlInicioDelArray
+  eliminaAlInicioDelArray,
+  unirElementosDelArray,
+  sumarTodosLosNumeros
 }

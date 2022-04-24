@@ -2,7 +2,9 @@ const { largoDeArray,
   agregarAlFinalDelArray,
   agregarAlInicioDelArray,
   eliminaAlFinalDelArray,
-  eliminaAlInicioDelArray } = require("../arrays")
+  eliminaAlInicioDelArray,
+  unirElementosDelArray
+} = require("../arrays")
 describe("que tan largo es el array", () => {
   it("debe ser 4", () => {
     expect(largoDeArray([1, 2, 3, 4])).toBe(4)
@@ -29,5 +31,10 @@ describe("elimina un elemento al final del array", () => {
 describe("elimina el primer elemento del array", () => {
   it("debe tener solo 4 elementos", () => {
     expect(eliminaAlInicioDelArray([0, 1, 2, 3, 4])).toBe([1, 2, 3, 4])
+  })
+})
+describe("une un array para que sea un solo string", () => {
+  it("debe ser Hola programadora", () => {
+    expect(unirElementosDelArray(["Hola", "Programadora"])).toBe("Hola Programadora")
   })
 })

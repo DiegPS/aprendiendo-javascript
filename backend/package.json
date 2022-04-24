@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "backend.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node ./backend.js",
+    "dev": "nodemon ./backend.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "mocha": "^9.2.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
+  }
+}

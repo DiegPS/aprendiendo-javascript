@@ -1,15 +1,15 @@
 {
-  "name": "arrays",
+  "name": "peticiones",
   "version": "1.0.0",
   "description": "",
-  "main": "arrays.js",
+  "main": "peticiones.js",
   "scripts": {
-    "test": "jest"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jest": "^27.5.1"
+    "axios": "^0.26.1"
   }
 }
