@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="OVA interactivo de educación financiera: presupuesto, ahorro y crédito responsable." />
+<title>Finanzas en orden | OVA</title>
+<style>
+:root{
+  --navy:#12315a; --navy2:#0c2443; --blue:#1f6fa8; --sky:#e9f4fb; --teal:#15937d;
+  --green:#21865f; --red:#b84b4b; --gold:#d49a25; --ink:#172334; --muted:#617287;
+  --paper:#ffffff; --bg:#eef4f8; --line:#d8e3eb; --shadow:0 20px 60px rgba(12,36,67,.16);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(135deg,#e8f2f8 0%,#f7fbfd 55%,#eaf6f3 100%);color:var(--ink);overflow:hidden}
+button,a{font:inherit}
+button{cursor:pointer}
+a{color:inherit}
+.app{height:100%;display:grid;grid-template-rows:auto 1fr auto;gap:0}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:5}
+.brand{display:flex;align-items:center;gap:12px}.brandmark{width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,var(--navy),var(--blue));display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:0 8px 20px rgba(31,111,168,.25)}
+.brand strong{display:block;font-size:15px;letter-spacing:.01em}.brand small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.progressWrap{display:flex;align-items:center;gap:12px;min-width:280px;justify-content:flex-end}.progress{height:7px;width:180px;background:#e5edf2;border-radius:99px;overflow:hidden}.progress>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--teal));border-radius:99px;transition:width .25s ease}.counter{font-size:12px;color:var(--muted);font-weight:700;white-space:nowrap}
+.stage{display:grid;place-items:center;padding:22px;min-height:0}.slide{display:none;width:min(1180px,100%);height:min(690px,calc(100vh - 145px));background:var(--paper);border:1px solid rgba(216,227,235,.95);border-radius:28px;box-shadow:var(--shadow);overflow:auto;position:relative;padding:46px 54px 54px}.slide.active{display:block;animation:enter .28s ease}
+@keyframes enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.slide::before{content:"";position:absolute;inset:0 0 auto 0;height:8px;background:linear-gradient(90deg,var(--navy),var(--blue),var(--teal))}
+.kicker{display:inline-flex;gap:8px;align-items:center;color:var(--blue);font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;margin-bottom:10px}.kicker::before{content:"";width:24px;height:3px;border-radius:9px;background:var(--blue)}
+h1,h2,h3,p{margin-top:0}h1{font-size:clamp(44px,5vw,72px);line-height:1.03;letter-spacing:-.04em;margin-bottom:16px}h2{font-size:clamp(30px,3.2vw,44px);line-height:1.08;letter-spacing:-.03em;margin-bottom:14px}h3{font-size:20px;margin-bottom:8px}.lead{font-size:20px;line-height:1.6;color:#354861;max-width:820px}.small{font-size:13px;color:var(--muted);line-height:1.5}.citation{font-size:12px;color:#65778c;margin-top:14px}.eyebrow{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;background:var(--sky);color:var(--blue);font-size:12px;font-weight:800;margin-bottom:14px}
+.heroGrid{display:grid;grid-template-columns:1.15fr .85fr;gap:42px;align-items:center;height:100%}.heroArt{min-height:410px;border-radius:28px;background:linear-gradient(145deg,#eaf4fb,#eef9f6);position:relative;overflow:hidden;border:1px solid var(--line)}
+.heroArt svg{width:100%;height:100%;position:absolute;inset:0}.heroStats{position:absolute;left:26px;bottom:24px;right:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.heroStats div{background:rgba(255,255,255,.92);border:1px solid rgba(216,227,235,.9);padding:13px 14px;border-radius:14px}.heroStats b{font-size:17px;display:block}.heroStats span{font-size:11px;color:var(--muted)}
+.primary,.secondary,.ghost,.answer,.chip{border:0;border-radius:14px;padding:12px 18px;font-weight:800;transition:.18s ease}.primary{background:var(--navy);color:#fff;box-shadow:0 10px 24px rgba(18,49,90,.18)}.primary:hover{transform:translateY(-1px);background:#0e294c}.secondary{background:#e9f4fb;color:var(--navy)}.secondary:hover{background:#dbeef8}.ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}.ghost:hover{background:#f7fafc}.btnRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:26px}.card{border:1px solid var(--line);border-radius:18px;padding:20px;background:linear-gradient(180deg,#fff,#fbfdfe);min-height:150px}.card .num{width:38px;height:38px;border-radius:12px;background:var(--sky);color:var(--blue);display:grid;place-items:center;font-weight:900;margin-bottom:15px}.card p{color:var(--muted);line-height:1.45;margin-bottom:0;font-size:14px}.clickCard{cursor:pointer;position:relative;transition:.18s ease}.clickCard:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(18,49,90,.09);border-color:#b9d7e9}.clickCard[aria-pressed="true"]{border-color:var(--blue);box-shadow:0 0 0 3px rgba(31,111,168,.12)}
+.path{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px;position:relative}.path::before{content:"";height:3px;background:#cfe0ea;position:absolute;left:11%;right:11%;top:30px;z-index:0}.pathStep{position:relative;z-index:1;text-align:center}.pathStep .circle{width:62px;height:62px;border-radius:18px;background:#fff;border:2px solid #c4dbe8;display:grid;place-items:center;margin:0 auto 10px;font-weight:900;color:var(--blue);font-size:22px}.pathStep strong{display:block}.pathStep span{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+.twoCol{display:grid;grid-template-columns:1fr 1fr;gap:26px}.panel{border:1px solid var(--line);border-radius:20px;background:#fbfdfe;padding:22px}.formula{padding:16px 18px;background:var(--navy);color:#fff;border-radius:16px;font-size:19px;font-weight:900;display:inline-block;margin:10px 0 16px}.steps{display:grid;gap:9px;margin-top:10px}.step{display:flex;gap:12px;align-items:flex-start}.step i{flex:0 0 28px;height:28px;border-radius:9px;background:var(--sky);color:var(--blue);font-style:normal;display:grid;place-items:center;font-weight:900}.step span{line-height:1.5}
+.quiz{margin-top:18px}.question{font-size:19px;font-weight:800;margin-bottom:12px}.answers{display:grid;gap:10px}.answer{text-align:left;background:#f5f8fa;border:1px solid var(--line);color:var(--ink);padding:13px 15px}.answer:hover{background:#edf5fa;border-color:#b9d7e9}.answer.correct{background:#eaf7f1;border-color:#9bd5bb;color:#15593d}.answer.wrong{background:#fff0f0;border-color:#e6b0b0;color:#7d2f2f}.feedback{display:none;margin-top:14px;padding:14px 16px;border-radius:14px;line-height:1.45;font-weight:650}.feedback.show{display:block}.feedback.ok{background:#eaf7f1;color:#15593d;border:1px solid #a5d8c1}.feedback.bad{background:#fff2f2;color:#7d2f2f;border:1px solid #e5b7b7}.feedback.info{background:#eef6fb;color:#234c68;border:1px solid #bdd9e9}
+.classifyGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}.item{border:1px solid var(--line);border-radius:16px;padding:15px;background:#fff}.item strong{display:block;margin-bottom:10px}.choiceRow{display:flex;gap:7px;flex-wrap:wrap}.chip{padding:8px 10px;background:#f3f7fa;border:1px solid var(--line);font-size:12px}.chip.selected{background:var(--navy);color:#fff;border-color:var(--navy)}
+.budgetTable{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border:1px solid var(--line);border-radius:16px;margin-top:12px}.budgetTable th,.budgetTable td{padding:10px 12px;border-bottom:1px solid var(--line);font-size:13px}.budgetTable th{background:#edf5fa;color:var(--navy);text-align:left}.budgetTable td:last-child,.budgetTable th:last-child{text-align:right;font-weight:800}.budgetTable tr:last-child td{border-bottom:0}.budgetTable .total td{background:#f2faf6;color:#15593d;font-weight:900}
+.metricRow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.metric{padding:16px;border:1px solid var(--line);border-radius:16px;background:#fbfdfe}.metric span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}.metric b{font-size:24px;margin-top:5px;display:block;color:var(--navy)}
+.creditCards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px}.credit{border:2px solid var(--line);border-radius:20px;padding:20px;position:relative;background:#fff}.credit.recommended{border-color:#8bc8b4}.credit .tag{position:absolute;top:14px;right:14px;padding:5px 8px;border-radius:99px;background:#e7f6f0;color:#176048;font-size:11px;font-weight:900}.credit h3{font-size:24px}.credit .big{font-size:32px;font-weight:950;color:var(--navy);margin:12px 0 2px}.credit .meta{display:grid;gap:5px;font-size:13px;color:var(--muted)}
+.termGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:15px}.term{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fbfdfe;cursor:pointer;font-weight:800;color:var(--navy);text-align:center}.term:hover{background:#eef6fb}.termDef{margin-top:12px;min-height:64px;padding:13px 15px;border-radius:14px;background:#f5f8fa;color:#40536a;line-height:1.45}
+.caseSteps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}.caseBox{border:1px solid var(--line);border-radius:18px;padding:18px}.caseBox .qnum{display:inline-grid;place-items:center;width:31px;height:31px;border-radius:10px;background:var(--navy);color:#fff;font-weight:900;margin-bottom:10px}.caseBox input{width:100%;padding:11px 12px;border:1px solid #cbd9e3;border-radius:12px;font:inherit}.caseBox label{display:block;margin:8px 0;font-size:13px}.caseFeedback{font-size:12px;margin-top:8px;font-weight:700;min-height:18px}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:18px}.check{display:flex;align-items:flex-start;gap:10px;padding:14px;border:1px solid var(--line);border-radius:14px;background:#fbfdfe}.check input{margin-top:3px;accent-color:var(--teal);width:18px;height:18px}.reviewBtns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.refList{display:grid;gap:12px;margin-top:14px}.ref{padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:#fbfdfe;line-height:1.45;font-size:13px}.ref a{color:var(--blue);text-decoration:none;font-weight:800;word-break:break-word}.ref a:hover{text-decoration:underline}
+.navbar{display:flex;justify-content:center;align-items:center;gap:10px;padding:10px 18px 14px}.navbtn{border:1px solid var(--line);background:rgba(255,255,255,.94);color:var(--navy);border-radius:12px;padding:10px 15px;font-weight:850;min-width:112px;box-shadow:0 8px 18px rgba(12,36,67,.06)}.navbtn:hover:not(:disabled){background:#fff;transform:translateY(-1px)}.navbtn:disabled{opacity:.42;cursor:not-allowed}.homebtn{min-width:54px;padding-inline:13px}.hint{font-size:11px;color:var(--muted);text-align:center;margin-left:8px}
+.modal{position:fixed;inset:0;background:rgba(6,22,42,.52);display:none;place-items:center;z-index:20;padding:20px}.modal.show{display:grid}.modalBox{width:min(560px,96vw);background:#fff;border-radius:22px;padding:26px;box-shadow:0 30px 80px rgba(0,0,0,.22)}.modalBox h3{font-size:24px}.modalClose{float:right;border:0;background:#eef3f7;width:36px;height:36px;border-radius:10px;font-size:20px}
+.note{padding:13px 15px;border-left:4px solid var(--gold);background:#fff8e9;border-radius:10px;color:#68501b;font-size:13px;line-height:1.45}.ownVisual{font-size:11px;color:var(--muted);margin-top:12px;font-style:italic}
+@media(max-width:900px){body{overflow:auto}.app{min-height:100%;height:auto}.stage{padding:10px}.slide{height:auto;min-height:calc(100vh - 150px);padding:34px 24px 44px}.heroGrid,.twoCol{grid-template-columns:1fr}.heroArt{min-height:290px}.cards{grid-template-columns:1fr 1fr}.termGrid{grid-template-columns:1fr 1fr}.caseSteps{grid-template-columns:1fr}.progressWrap{min-width:0}.progress{display:none}.topbar{padding:10px 12px}.brand small{display:none}.navbar{position:sticky;bottom:0;background:rgba(238,244,248,.94);backdrop-filter:blur(10px);z-index:7}.path{grid-template-columns:1fr 1fr}.path::before{display:none}.creditCards{grid-template-columns:1fr}.checks{grid-template-columns:1fr}.classifyGrid{grid-template-columns:1fr}.metricRow{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){h1{font-size:44px}.slide{border-radius:18px}.cards{grid-template-columns:1fr}.path{grid-template-columns:1fr 1fr}.navbtn{min-width:auto}.hint{display:none}.metricRow{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand"><div class="brandmark">$</div><div><strong>Finanzas en orden</strong><small>OVA · Educación financiera básica</small></div></div>
+  <div class="progressWrap"><div class="progress"><i id="progressBar"></i></div><div class="counter" id="counter">Pantalla 1 de 17</div></div>
+</header>
+<main class="stage" id="stage">
+
+<section class="slide" data-title="Portada">
+  <div class="heroGrid">
+    <div>
+      <div class="eyebrow">Lección interactiva · 35–45 min</div>
+      <h1>Finanzas<br>en orden</h1>
+      <p class="lead">Presupuesto, ahorro y crédito responsable.</p>
+      <p class="small">Educación financiera básica para jóvenes de 18 a 25 años. Todos los casos e importes utilizados en las actividades son ficticios y tienen fines didácticos.</p>
+      <div class="btnRow"><button class="primary" onclick="goTo(1)">Comenzar</button></div>
+    </div>
+    <div class="heroArt" aria-label="Ilustración financiera de elaboración propia">
+      <svg viewBox="0 0 500 420" role="img" aria-label="Cartera, monedas, alcancía y tarjeta estilizadas">
+        <rect x="58" y="142" rx="28" ry="28" width="300" height="175" fill="#ffffff" stroke="#bcd4e4" stroke-width="5"/>
+        <rect x="73" y="159" rx="19" width="265" height="58" fill="#12315a"/>
+        <circle cx="280" cy="245" r="16" fill="#15937d"/>
+        <rect x="273" y="239" width="10" height="12" rx="2" fill="#fff"/>
+        <circle cx="382" cy="103" r="53" fill="#d49a25" opacity=".95"/><text x="382" y="118" font-size="44" text-anchor="middle" font-weight="900" fill="#fff">$</text>
+        <circle cx="410" cy="182" r="39" fill="#f0be54"/><text x="410" y="194" font-size="30" text-anchor="middle" font-weight="900" fill="#fff">$</text>
+        <path d="M325 300 C360 250,435 260,446 326 C452 368,412 390,366 373 C328 359,309 333,325 300Z" fill="#e9f4fb" stroke="#1f6fa8" stroke-width="5"/>
+        <circle cx="389" cy="296" r="6" fill="#1f6fa8"/>
+        <path d="M356 271 Q390 246 422 273" fill="none" stroke="#1f6fa8" stroke-width="5" stroke-linecap="round"/>
+        <rect x="105" y="83" width="164" height="98" rx="16" fill="#15937d" transform="rotate(-8 187 132)"/>
+        <rect x="124" y="108" width="75" height="8" rx="4" fill="#d9fff5" transform="rotate(-8 187 132)"/>
+        <rect x="124" y="130" width="98" height="8" rx="4" fill="#d9fff5" transform="rotate(-8 187 132)"/>
+      </svg>
+      <div class="heroStats"><div><b>4</b><span>temas clave</span></div><div><b>6</b><span>actividades</span></div><div><b>100%</b><span>autogestivo</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Bienvenida">
+  <div class="kicker">Bienvenida</div><h2>Aprender a organizar tu dinero también se practica</h2>
+  <p class="lead">En esta lección aprenderás a organizar ingresos y gastos, construir un presupuesto, definir una meta de ahorro y comparar opciones de crédito. Trabajarás con datos ficticios y recibirás retroalimentación inmediata.</p>
+  <div class="cards">
+    <div class="card"><div class="num">01</div><h3>Ingresos y gastos</h3><p>Identifica qué entra, qué sale y cómo se clasifica.</p></div>
+    <div class="card"><div class="num">02</div><h3>Presupuesto</h3><p>Calcula tu balance y detecta cuándo necesitas ajustar.</p></div>
+    <div class="card"><div class="num">03</div><h3>Ahorro</h3><p>Convierte un objetivo en una cantidad y un plazo.</p></div>
+    <div class="card"><div class="num">04</div><h3>Crédito</h3><p>Compara costos, CAT y capacidad de pago.</p></div>
+  </div>
+  <div class="btnRow"><button class="primary" onclick="nextSlide()">Comenzar recorrido</button></div>
+</section>
+
+<section class="slide" data-title="¿Qué aprenderás?">
+  <div class="kicker">Propósitos de aprendizaje</div><h2>Al terminar podrás tomar decisiones con más información</h2>
+  <div class="cards" style="grid-template-columns:repeat(3,1fr)">
+    <div class="card"><div class="num">P1</div><h3>Clasificar</h3><p>Distinguir ingresos, gastos fijos y gastos variables.</p></div>
+    <div class="card"><div class="num">P2</div><h3>Calcular</h3><p>Obtener el balance de un presupuesto y reconocer ajustes.</p></div>
+    <div class="card"><div class="num">P3</div><h3>Planear</h3><p>Formular una meta de ahorro viable.</p></div>
+    <div class="card"><div class="num">P4</div><h3>Reconocer</h3><p>Identificar los elementos básicos de un crédito y el CAT.</p></div>
+    <div class="card"><div class="num">P5</div><h3>Comparar</h3><p>Contrastar alternativas por pago, costo y capacidad de pago.</p></div>
+    <div class="card"><div class="num">P6</div><h3>Comprobar</h3><p>Integrar lo aprendido en un caso y una autoevaluación.</p></div>
+  </div>
+  <p class="small" style="margin-top:16px"><strong>Duración estimada:</strong> 35 a 45 minutos.</p>
+</section>
+
+<section class="slide" data-title="Introducción">
+  <div class="kicker">Introducción</div><h2>Tomar decisiones financieras implica priorizar</h2>
+  <p class="lead">Si no conoces cuánto dinero tienes disponible, una compra o un crédito puede comprometer recursos necesarios para otros gastos. Por eso recorrerás cuatro pasos sencillos.</p>
+  <div class="path">
+    <div class="pathStep"><div class="circle">1</div><strong>Identificar</strong><span>Ingresos y gastos</span></div>
+    <div class="pathStep"><div class="circle">2</div><strong>Organizar</strong><span>Presupuesto</span></div>
+    <div class="pathStep"><div class="circle">3</div><strong>Ahorrar</strong><span>Meta y plazo</span></div>
+    <div class="pathStep"><div class="circle">4</div><strong>Comparar</strong><span>Crédito y CAT</span></div>
+  </div>
+  <div class="note" style="margin-top:28px"><strong>Cómo navegar:</strong> usa los botones Anterior y Siguiente. En las actividades selecciona una respuesta y revisa la retroalimentación. Cuando aparezca “Intentar de nuevo”, puedes repetir el ejercicio.</div>
+  <div class="ownVisual">Ruta visual de elaboración propia.</div>
+</section>
+
+<section class="slide" data-title="Diagnóstico inicial">
+  <div class="kicker">Diagnóstico inicial</div><h2>Antes de empezar, prueba este cálculo</h2>
+  <div class="twoCol">
+    <div class="panel"><p class="question">Recibes <strong>$8,000</strong> este mes. Gastas $3,000 de renta, $800 de transporte, $2,000 de comida y $1,500 de entretenimiento. ¿Cuánto dinero te queda?</p><div class="formula">$8,000 − gastos = ?</div><p class="small">Este diagnóstico no tiene calificación. Su función es activar conocimientos previos.</p></div>
+    <div class="panel quiz" data-quiz="diag"><div class="answers">
+      <button class="answer" onclick="quizAnswer(this,'diag',false,'Los gastos suman $7,300. Revisa la resta: $8,000 − $7,300.')">A) $300</button>
+      <button class="answer" onclick="quizAnswer(this,'diag',true,'Correcto. Los gastos suman $7,300 y el balance disponible es $700.')">B) $700</button>
+      <button class="answer" onclick="quizAnswer(this,'diag',false,'Los gastos suman $7,300. Revisa la resta: $8,000 − $7,300.')">C) $1,300</button>
+    </div><div class="feedback info" id="fb-diag"></div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Ingresos y gastos">
+  <div class="kicker">Tema 1</div><h2>¿A dónde va mi dinero?</h2>
+  <p class="lead">Un ingreso es dinero que recibes. Un gasto es dinero que utilizas para cubrir necesidades o deseos. Los gastos pueden ser fijos o variables. Toca cada tarjeta para ver un ejemplo.</p>
+  <div class="cards" style="grid-template-columns:repeat(3,1fr)">
+    <button class="card clickCard" onclick="showModal('Ingreso','Dinero que recibes, por ejemplo un sueldo, una beca o el pago por un trabajo.')"><div class="num">+</div><h3>Ingreso</h3><p>Dinero que entra.</p></button>
+    <button class="card clickCard" onclick="showModal('Gasto fijo','Gasto periódico que suele repetirse y que normalmente se debe cubrir, como la renta o una suscripción mensual.')"><div class="num">F</div><h3>Gasto fijo</h3><p>Se repite de forma periódica.</p></button>
+    <button class="card clickCard" onclick="showModal('Gasto variable','Gasto cuyo monto puede cambiar según el consumo o las decisiones del periodo, como alimentos o entretenimiento.')"><div class="num">V</div><h3>Gasto variable</h3><p>Puede cambiar mes a mes.</p></button>
+  </div>
+  <p class="citation">Fuente de apoyo: Banco de México (s.f.-b), <em>Domina tu dinero</em>.</p>
+</section>
+
+<section class="slide" data-title="Actividad: clasifica">
+  <div class="kicker">Actividad 1</div><h2>Clasifica ingresos y gastos</h2>
+  <p>Selecciona una categoría para cada ejemplo y después pulsa <strong>Comprobar</strong>.</p>
+  <div class="classifyGrid" id="classifyGrid">
+    <div class="item" data-correct="ingreso"><strong>1. Sueldo mensual de $8,000</strong><div class="choiceRow"><button class="chip" data-v="ingreso">Ingreso</button><button class="chip" data-v="fijo">Gasto fijo</button><button class="chip" data-v="variable">Gasto variable</button></div></div>
+    <div class="item" data-correct="fijo"><strong>2. Renta de $3,000</strong><div class="choiceRow"><button class="chip" data-v="ingreso">Ingreso</button><button class="chip" data-v="fijo">Gasto fijo</button><button class="chip" data-v="variable">Gasto variable</button></div></div>
+    <div class="item" data-correct="variable"><strong>3. Compra de alimentos</strong><div class="choiceRow"><button class="chip" data-v="ingreso">Ingreso</button><button class="chip" data-v="fijo">Gasto fijo</button><button class="chip" data-v="variable">Gasto variable</button></div></div>
+    <div class="item" data-correct="fijo"><strong>4. Suscripción mensual de $200</strong><div class="choiceRow"><button class="chip" data-v="ingreso">Ingreso</button><button class="chip" data-v="fijo">Gasto fijo</button><button class="chip" data-v="variable">Gasto variable</button></div></div>
+  </div>
+  <div class="btnRow"><button class="primary" onclick="checkClassification()">Comprobar</button><button class="ghost" onclick="resetClassification()">Intentar de nuevo</button></div>
+  <div class="feedback" id="fb-class"></div>
+</section>
+
+<section class="slide" data-title="Presupuesto">
+  <div class="kicker">Tema 2</div><h2>Un presupuesto convierte datos en decisiones</h2>
+  <div class="twoCol">
+    <div><p class="lead" style="font-size:18px">Un presupuesto permite organizar ingresos y gastos antes de decidir. Un balance negativo indica que el plan necesita ajustes.</p><div class="steps"><div class="step"><i>1</i><span>Sumar ingresos.</span></div><div class="step"><i>2</i><span>Registrar gastos fijos.</span></div><div class="step"><i>3</i><span>Estimar gastos variables.</span></div><div class="step"><i>4</i><span>Definir el ahorro.</span></div><div class="step"><i>5</i><span>Calcular el balance.</span></div></div></div>
+    <div class="panel"><div class="formula">Balance = ingresos − gastos − ahorro</div><p>El presupuesto te ayuda a saber cuánto dinero entra, cuánto sale y qué cambios puedes hacer para mantener tus prioridades.</p><div class="btnRow"><a class="secondary" href="https://www.gob.mx/condusef/articulos/organiza-tu-dinero-y-tu-vida?idiom=es" target="_blank" rel="noopener">Abrir recurso CONDUSEF ↗</a><a class="ghost" href="https://revista.condusef.gob.mx/wp-content/uploads/2026/01/hoja_310.pdf" target="_blank" rel="noopener">Hoja de presupuesto ↗</a></div></div>
+  </div>
+  <p class="citation">Fuente: Comisión Nacional para la Protección y Defensa de los Usuarios de Servicios Financieros [CONDUSEF] (2026).</p>
+</section>
+
+<section class="slide" data-title="Actividad: presupuesto">
+  <div class="kicker">Actividad 2</div><h2>Ayuda a Alex a ajustar su presupuesto</h2>
+  <div class="twoCol">
+    <div><table class="budgetTable"><thead><tr><th>Concepto</th><th>Monto</th></tr></thead><tbody><tr><td>Ingreso</td><td>$10,000</td></tr><tr><td>Renta</td><td>$3,500</td></tr><tr><td>Alimentos</td><td>$2,000</td></tr><tr><td>Transporte</td><td>$900</td></tr><tr><td>Teléfono</td><td>$400</td></tr><tr><td>Entretenimiento</td><td>$1,200</td></tr><tr><td>Suscripciones</td><td>$500</td></tr><tr class="total"><td>Disponible</td><td>$1,500</td></tr></tbody></table></div>
+    <div class="quiz" data-quiz="alex"><p class="question">Alex quiere ahorrar $2,000. ¿Qué decisión es más adecuada?</p><div class="answers"><button class="answer" onclick="quizAnswer(this,'alex',false,'Pedir $500 prestados agregaría una nueva obligación. Primero conviene revisar gastos que sí pueden ajustarse.')">A) Pedir prestados $500.</button><button class="answer" onclick="quizAnswer(this,'alex',true,'Correcto. Alex necesita liberar al menos $500 de gastos no indispensables para que su meta de ahorro sea compatible con el presupuesto.')">B) Reducir al menos $500 de gastos no indispensables.</button><button class="answer" onclick="quizAnswer(this,'alex',false,'Ahorrar $2,000 sin ajustar el presupuesto dejaría un balance negativo de $500.')">C) Ahorrar $2,000 aunque el presupuesto quede negativo.</button></div><div class="feedback" id="fb-alex"></div></div>
+  </div>
+  <div class="ownVisual">Tabla y distribución visual de elaboración propia.</div>
+</section>
+
+<section class="slide" data-title="Meta de ahorro">
+  <div class="kicker">Tema 2</div><h2>Una meta de ahorro necesita cantidad, plazo y constancia</h2>
+  <p class="lead">Pregúntate: ¿cuánto quiero reunir?, ¿en cuánto tiempo? y ¿cuánto debo apartar periódicamente?</p>
+  <div class="metricRow"><div class="metric"><span>Objetivo</span><b>$4,800</b></div><div class="metric"><span>Plazo</span><b>8 meses</b></div><div class="metric"><span>Ahorro mensual</span><b>$600</b></div></div>
+  <div class="formula">$4,800 ÷ 8 = $600 al mes</div>
+  <p>Una meta es más útil cuando también defines acciones concretas para cumplirla y verificas que sea compatible con tu presupuesto.</p>
+  <p class="citation">Fuente de apoyo: Banco de México (s.f.-b), <em>Domina tu dinero</em>.</p>
+</section>
+
+<section class="slide" data-title="Actividad: ahorro">
+  <div class="kicker">Actividad 3</div><h2>Calcula una meta viable</h2>
+  <div class="twoCol">
+    <div class="panel quiz" data-quiz="save1"><p class="question">Quieres reunir $6,000 en 10 meses. ¿Cuánto necesitas ahorrar cada mes?</p><div class="answers"><button class="answer" onclick="quizAnswer(this,'save1',false,'Revisa la división entre el monto objetivo y el número de meses.')">A) $500</button><button class="answer" onclick="quizAnswer(this,'save1',true,'Correcto: $6,000 ÷ 10 = $600 al mes.')">B) $600</button><button class="answer" onclick="quizAnswer(this,'save1',false,'$750 al mes superaría lo necesario para esta meta de 10 meses.')">C) $750</button></div><div class="feedback" id="fb-save1"></div></div>
+    <div class="panel quiz" data-quiz="save2"><p class="question">Si solo pudieras ahorrar $400 mensuales, ¿qué sería más razonable?</p><div class="answers"><button class="answer" onclick="quizAnswer(this,'save2',true,'Correcto. Si el ahorro mensual disponible es menor, conviene ajustar el plazo o la cantidad objetivo.')">A) Ajustar el plazo o la cantidad objetivo.</button><button class="answer" onclick="quizAnswer(this,'save2',false,'Un crédito añadiría una obligación de pago y no corrige la diferencia entre la meta y tu capacidad de ahorro.')">B) Pedir un crédito.</button><button class="answer" onclick="quizAnswer(this,'save2',false,'Ignorar el presupuesto puede convertir una meta de ahorro en un desequilibrio financiero.')">C) Ignorar el presupuesto.</button></div><div class="feedback" id="fb-save2"></div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Crédito responsable">
+  <div class="kicker">Tema 3</div><h2>Antes de aceptar un crédito, compara más que la mensualidad</h2>
+  <p class="lead" style="font-size:18px">Toca un concepto para conocer qué debes revisar antes de elegir.</p>
+  <div class="termGrid">
+    <button class="term" onclick="term('Monto','Cantidad de dinero que se solicita o financia.')">Monto</button><button class="term" onclick="term('Plazo','Tiempo durante el cual se realizarán los pagos.')">Plazo</button><button class="term" onclick="term('Intereses','Costo asociado al uso del dinero prestado.')">Intereses</button><button class="term" onclick="term('Comisiones','Cargos adicionales que pueden formar parte del costo del crédito.')">Comisiones</button><button class="term" onclick="term('Pago periódico','Cantidad que se debe cubrir en cada periodo, por ejemplo cada mes.')">Pago periódico</button><button class="term" onclick="term('Costo total','Suma aproximada de los pagos y cargos considerados en el ejemplo.')">Costo total</button><button class="term" onclick="term('CAT','Medida estandarizada del costo del financiamiento, expresada en términos porcentuales anuales, útil para comparar créditos.')">CAT</button><button class="term" onclick="term('Capacidad de pago','Parte del ingreso disponible que puedes comprometer sin descuidar gastos y metas prioritarias.')">Capacidad de pago</button>
+  </div>
+  <div class="termDef" id="termDef">Selecciona un concepto.</div>
+  <div class="btnRow"><a class="secondary" href="https://www.banxico.org.mx/CAT/" target="_blank" rel="noopener">Abrir Calculadora CAT del Banco de México ↗</a></div>
+  <p class="citation">Fuente: Banco de México (s.f.-a). El CAT incorpora costos y gastos inherentes al crédito para fines informativos y de comparación.</p>
+</section>
+
+<section class="slide" data-title="Actividad: compara créditos">
+  <div class="kicker">Actividad 4</div><h2>Compara dos créditos hipotéticos</h2>
+  <p>Necesitas financiar <strong>$10,000 durante 12 meses</strong>. Los datos son ficticios.</p>
+  <div class="creditCards"><div class="credit recommended"><span class="tag">Opción A</span><h3>Crédito A</h3><div class="big">$1,020/mes</div><div class="meta"><span>Total aprox.: <strong>$12,240</strong></span><span>CAT: <strong>40 %</strong></span><span>Comisión inicial: <strong>$0</strong></span></div></div><div class="credit"><span class="tag" style="background:#fff1ef;color:#8a3b32">Opción B</span><h3>Crédito B</h3><div class="big">$1,095/mes</div><div class="meta"><span>Total aprox.: <strong>$13,440</strong></span><span>CAT: <strong>58 %</strong></span><span>Comisión inicial: <strong>$300</strong></span></div></div></div>
+  <div class="quiz" data-quiz="credit"><p class="question">¿Cuál resulta más conveniente en este caso?</p><div class="answers" style="grid-template-columns:1fr 1fr"><button class="answer" onclick="quizAnswer(this,'credit',true,'Correcto. En este ejemplo, A tiene menor pago mensual, menor costo total y menor CAT. Aun así, siempre debe revisarse la capacidad de pago.')">A) Opción A</button><button class="answer" onclick="quizAnswer(this,'credit',false,'Compara nuevamente pago mensual, costo total y CAT. En los tres datos, la opción B es mayor.')">B) Opción B</button></div><div class="feedback" id="fb-credit"></div></div>
+  <div class="ownVisual">Comparación visual y valores ficticios de elaboración propia.</div>
+</section>
+
+<section class="slide" data-title="Caso integrador">
+  <div class="kicker">Caso integrador</div><h2>Andrea necesita tomar decisiones sin perder el equilibrio</h2>
+  <p>Andrea recibe <strong>$12,000</strong> al mes, sus gastos suman <strong>$10,500</strong> y quiere ahorrar <strong>$1,200</strong> mensuales.</p>
+  <div class="caseSteps">
+    <div class="caseBox"><div class="qnum">1</div><p><strong>¿Cuál es su balance antes del ahorro?</strong></p><input id="case1" inputmode="numeric" placeholder="Ej. 1500"/><button class="secondary" style="margin-top:9px" onclick="checkCase1()">Comprobar</button><div class="caseFeedback" id="cf1"></div></div>
+    <div class="caseBox"><div class="qnum">2</div><p><strong>¿Puede ahorrar $1,200 sin quedar en negativo?</strong></p><label><input type="radio" name="case2" value="si"> Sí</label><label><input type="radio" name="case2" value="no"> No</label><button class="secondary" style="margin-top:5px" onclick="checkCase2()">Comprobar</button><div class="caseFeedback" id="cf2"></div></div>
+    <div class="caseBox"><div class="qnum">3</div><p><strong>Si necesitara un crédito, ¿qué debe comparar?</strong></p><label><input type="checkbox" class="case3" value="monto"> Monto y plazo</label><label><input type="checkbox" class="case3" value="costos"> Intereses/comisiones y costo total</label><label><input type="checkbox" class="case3" value="cat"> CAT</label><label><input type="checkbox" class="case3" value="capacidad"> Capacidad de pago</label><button class="secondary" style="margin-top:5px" onclick="checkCase3()">Comprobar</button><div class="caseFeedback" id="cf3"></div></div>
+  </div>
+  <div class="btnRow"><button class="ghost" onclick="goTo(7)">Repasar presupuesto</button><button class="ghost" onclick="goTo(11)">Repasar crédito</button></div>
+</section>
+
+<section class="slide" data-title="Autoevaluación">
+  <div class="kicker">Autoevaluación</div><h2>Marca lo que ya puedes hacer</h2>
+  <p class="lead" style="font-size:18px">Esta lista es para ti. No requiere revisión de un asesor.</p>
+  <div class="checks"><label class="check"><input type="checkbox"><span>Distingo ingresos y gastos.</span></label><label class="check"><input type="checkbox"><span>Reconozco gastos fijos y variables.</span></label><label class="check"><input type="checkbox"><span>Calculo el balance de un presupuesto.</span></label><label class="check"><input type="checkbox"><span>Establezco una meta de ahorro.</span></label><label class="check"><input type="checkbox"><span>Comparo créditos considerando pago, costo total y CAT.</span></label><label class="check"><input type="checkbox"><span>Considero la capacidad de pago antes de comprometer ingresos.</span></label></div>
+  <div class="reviewBtns"><button class="ghost" onclick="goTo(5)">Repasar ingresos/gastos</button><button class="ghost" onclick="goTo(7)">Repasar presupuesto</button><button class="ghost" onclick="goTo(9)">Repasar ahorro</button><button class="ghost" onclick="goTo(11)">Repasar crédito</button></div>
+</section>
+
+<section class="slide" data-title="Conclusión">
+  <div class="heroGrid" style="grid-template-columns:1fr .72fr">
+    <div><div class="kicker">Conclusión</div><h2>¡Has terminado la lección!</h2><p class="lead">Organizar el dinero comienza por saber cuánto recibes y en qué lo gastas. Un presupuesto ayuda a anticipar decisiones; una meta convierte el ahorro en un objetivo concreto; y comparar un crédito permite reconocer su costo antes de comprometer tus ingresos.</p><div class="note"><strong>Idea clave:</strong> la mejor decisión financiera es aquella que puedes comprender, planear y sostener.</div><div class="btnRow"><button class="secondary" onclick="goTo(2)">Revisar propósitos</button><button class="primary" onclick="nextSlide()">Ir a referencias</button></div></div>
+    <div class="heroArt" style="min-height:360px"><svg viewBox="0 0 420 360" role="img" aria-label="Ilustración de metas financieras completadas"><circle cx="210" cy="180" r="125" fill="#eaf7f1"/><path d="M143 182 l42 42 91-103" fill="none" stroke="#15937d" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/><circle cx="88" cy="85" r="34" fill="#e9f4fb"/><text x="88" y="96" font-size="31" text-anchor="middle" fill="#1f6fa8" font-weight="900">$</text><circle cx="335" cy="85" r="30" fill="#fff6dc"/><text x="335" y="94" font-size="25" text-anchor="middle" fill="#d49a25" font-weight="900">✓</text></svg></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Referencias">
+  <div class="kicker">Referencias y recursos</div><h2>Fuentes consultadas</h2>
+  <div class="refList">
+    <div class="ref">Banco de México. (s.f.-a). <em>Calculadora del Costo Anual Total (CAT)</em>. <a href="https://www.banxico.org.mx/CAT/" target="_blank" rel="noopener">https://www.banxico.org.mx/CAT/</a></div>
+    <div class="ref">Banco de México. (s.f.-b). <em>Domina tu dinero</em>. Banxico Educa. <a href="https://educa.banxico.org.mx/recursos/publicaciones/domina-tu-dinero-snef.html" target="_blank" rel="noopener">https://educa.banxico.org.mx/recursos/publicaciones/domina-tu-dinero-snef.html</a></div>
+    <div class="ref">Comisión Nacional para la Protección y Defensa de los Usuarios de Servicios Financieros. (2026, 5 de enero). <em>Organiza tu dinero y tu vida</em>. Gobierno de México. <a href="https://www.gob.mx/condusef/articulos/organiza-tu-dinero-y-tu-vida?idiom=es" target="_blank" rel="noopener">https://www.gob.mx/condusef/articulos/organiza-tu-dinero-y-tu-vida?idiom=es</a></div>
+    <div class="ref">Comisión Nacional para la Protección y Defensa de los Usuarios de Servicios Financieros. (2026). <em>Hoja de presupuesto</em>. Revista Proteja su Dinero. <a href="https://revista.condusef.gob.mx/wp-content/uploads/2026/01/hoja_310.pdf" target="_blank" rel="noopener">https://revista.condusef.gob.mx/wp-content/uploads/2026/01/hoja_310.pdf</a></div>
+  </div>
+  <div class="note" style="margin-top:16px">Los ejercicios, valores hipotéticos, diagramas, tablas, iconos e ilustraciones de este OVA son de elaboración propia para fines didácticos.</div>
+  <div class="btnRow"><button class="primary" onclick="goTo(0)">Volver al inicio</button></div>
+</section>
+
+</main>
+<nav class="navbar" aria-label="Navegación del OVA">
+  <button class="navbtn homebtn" id="homeBtn" onclick="goTo(0)" aria-label="Ir al inicio">Inicio</button>
+  <button class="navbtn" id="prevBtn" onclick="prevSlide()">← Anterior</button>
+  <button class="navbtn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+  <span class="hint">También puedes usar ← y →</span>
+</nav>
+</div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modalBox"><button class="modalClose" onclick="closeModal()" aria-label="Cerrar">×</button><h3 id="modalTitle"></h3><p id="modalText"></p><button class="primary" onclick="closeModal()">Entendido</button></div></div>
+<script>
+const slides=[...document.querySelectorAll('.slide')]; let current=0;
+function update(){slides.forEach((s,i)=>s.classList.toggle('active',i===current));document.getElementById('counter').textContent=`Pantalla ${current+1} de ${slides.length}`;document.getElementById('progressBar').style.width=`${((current+1)/slides.length)*100}%`;document.getElementById('prevBtn').disabled=current===0;document.getElementById('nextBtn').disabled=current===slides.length-1;document.getElementById('nextBtn').textContent=current===slides.length-1?'Fin':'Siguiente →';history.replaceState(null,'',`?slide=${current+1}`);slides[current].scrollTop=0;document.title=`${slides[current].dataset.title} | Finanzas en orden`;}
+function goTo(i){current=Math.max(0,Math.min(slides.length-1,i));update()}
+function nextSlide(){if(current<slides.length-1){current++;update()}}
+function prevSlide(){if(current>0){current--;update()}}
+document.addEventListener('keydown',e=>{if(document.getElementById('modal').classList.contains('show')){if(e.key==='Escape')closeModal();return;} if(e.key==='ArrowRight')nextSlide(); if(e.key==='ArrowLeft')prevSlide();});
+const q=new URLSearchParams(location.search); if(q.has('slide')){let n=parseInt(q.get('slide'),10); if(Number.isFinite(n)) current=Math.max(0,Math.min(slides.length-1,n-1));} update();
+function showModal(title,text){document.getElementById('modalTitle').textContent=title;document.getElementById('modalText').textContent=text;document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function quizAnswer(btn,id,isCorrect,msg){const wrap=btn.closest('.quiz');wrap.querySelectorAll('.answer').forEach(b=>b.classList.remove('correct','wrong'));btn.classList.add(isCorrect?'correct':'wrong');const fb=document.getElementById('fb-'+id);fb.className='feedback show '+(isCorrect?'ok':'bad');fb.textContent=msg;}
+// Classification
+for(const item of document.querySelectorAll('#classifyGrid .item')){item.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{item.querySelectorAll('.chip').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');item.dataset.selected=b.dataset.v;}))}
+function checkClassification(){let complete=true,correct=0;document.querySelectorAll('#classifyGrid .item').forEach(item=>{if(!item.dataset.selected)complete=false; if(item.dataset.selected===item.dataset.correct)correct++;});const fb=document.getElementById('fb-class');fb.classList.add('show');if(!complete){fb.className='feedback show info';fb.textContent='Selecciona una categoría para los cuatro ejemplos.';return;}if(correct===4){fb.className='feedback show ok';fb.textContent='¡Muy bien! Sueldo = ingreso; renta = gasto fijo; alimentos = gasto variable; suscripción = gasto fijo.';}else{fb.className='feedback show bad';fb.textContent=`Tienes ${correct} de 4 correctas. Revisa las categorías e inténtalo de nuevo.`;}}
+function resetClassification(){document.querySelectorAll('#classifyGrid .item').forEach(item=>{delete item.dataset.selected;item.querySelectorAll('.chip').forEach(x=>x.classList.remove('selected'));});const fb=document.getElementById('fb-class');fb.className='feedback';fb.textContent='';}
+function term(title,text){document.getElementById('termDef').innerHTML=`<strong>${title}:</strong> ${text}`}
+function setCF(id,ok,text){const el=document.getElementById(id);el.textContent=text;el.style.color=ok?'#176048':'#8a3b32'}
+function checkCase1(){const raw=document.getElementById('case1').value.replace(/[$,\s]/g,'');const v=Number(raw);setCF('cf1',v===1500,v===1500?'Correcto: $12,000 − $10,500 = $1,500.':'Revisa: $12,000 − $10,500 = $1,500.')}
+function checkCase2(){const v=document.querySelector('input[name="case2"]:checked');if(!v){setCF('cf2',false,'Selecciona una opción.');return;}setCF('cf2',v.value==='si',v.value==='si'?'Correcto. $1,500 − $1,200 = $300 disponibles.':'Revisa el cálculo: después del ahorro todavía quedarían $300.')}
+function checkCase3(){const vals=[...document.querySelectorAll('.case3:checked')].map(x=>x.value);const ok=['monto','costos','cat','capacidad'].every(x=>vals.includes(x));setCF('cf3',ok,ok?'Correcto. Conviene comparar monto, plazo, costos, CAT y capacidad de pago.':'Marca todos los elementos relevantes antes de elegir un crédito.')}
+// Lightweight internal QA when ?test=1
+if(q.get('test')==='1'){
+  const tests=[]; const t=(name,ok)=>tests.push(`${ok?'PASS':'FAIL'} ${name}`);
+  t('17 pantallas',slides.length===17); t('diagnóstico 8000-7300=700',8000-(3000+800+2000+1500)===700); t('Alex disponible',10000-(3500+2000+900+400+1200+500)===1500); t('ahorro 6000/10',6000/10===600); t('crédito A total',1020*12===12240); t('crédito B total',1095*12+300===13440); t('Andrea balance',12000-10500===1500); t('Andrea remanente',12000-10500-1200===300);
+  const urls=[...document.querySelectorAll('a[href^="http"]')].map(a=>a.href);t('4 enlaces únicos de fuente',new Set(urls).size===4); const pre=document.createElement('pre');pre.id='qa-results';pre.style.cssText='position:fixed;inset:20px;z-index:999;background:white;padding:20px;white-space:pre-wrap';pre.textContent=tests.join('\n');document.body.appendChild(pre);
+}
+</script>
+</body>
+</html>
